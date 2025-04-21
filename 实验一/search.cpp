@@ -47,13 +47,14 @@ std::pair<Point, Point> bruteForce(const std::vector<Point>& points, double& min
     return closestPair;
 }
 
-// 找出跨越中线的最近点对（鸽笼原理）
+// 找出跨越中线的最近点对
 std::pair<Point, Point> stripClosest(const std::vector<Point>& strip, double& minDist) {
     std::pair<Point, Point> closestPair;
     int size = strip.size();
     
     for (int i = 0; i < size; i++) {
-        for (int j = i + 1; j < size && (strip[j].y - strip[i].y) < minDist; j++) {
+
+        for (int j = i + 1; j < size && j < i + 6 &&(strip[j].y - strip[i].y) < minDist; j++) {
             double dist = strip[i].distanceTo(strip[j]);
             if (dist < minDist) {
                 minDist = dist;
