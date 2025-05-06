@@ -8,21 +8,14 @@
 
 using namespace std;
 
-void print(vector<string>& t) {
-    int len = t.size();
-    for (int i = 0; i < len; i++) {
-        for (int j = 0; j < 9; j++) {
-            cout << t[i][j] << " ";
-            if ((j+1) % 3 == 0) cout << endl;
-        }
-        cout << endl;
-    }
-}
-
 int bfs() {
 
-    cout << "Start state: " << START_STATE << endl;
-    cout << "End state: " << END_STATE << endl;
+    cout << "初始状态: " <<  endl;
+    format_print(START_STATE);
+    cout << "目标状态: " << endl;
+    format_print(END_STATE);
+
+    cout << "_______________________________" << endl;
 
     queue<vector<string>> open;
     unordered_set<string> closed;
