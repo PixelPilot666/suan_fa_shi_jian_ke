@@ -40,13 +40,13 @@ struct Node {
     };
 };
 
-int dfs(Node node, int dm, int& times, stack<string>& open, unordered_set<string>& closed) {
+int dfs(Node node, int dm, int& times, stack<string>& path, unordered_set<string>& closed) {
     int f = node.g + node.h;
 
     if (f > dm) return f;
     
     if (node.state == END_STATE) {
-        open.push(node.state);
+        path.push(node.state);
         return -1;
     }
 
@@ -67,10 +67,10 @@ int dfs(Node node, int dm, int& times, stack<string>& open, unordered_set<string
         if (closed.count(new_state)) continue;
 
         Node child(new_state, node.g + 1, manhattan_distance(new_state));
-        int temp_dm = dfs(child, dm, times, open, closed);
+        int temp_dm = dfs(child, dm, times, path, closed);
 
         if (temp_dm == -1) {
-            open.push(node.state);
+            path.push(node.state);
             return -1;
         }
 
@@ -92,7 +92,7 @@ int idA_star() {
     init_target_positions();
 
     int times = 0;
-    stack<string> open;
+    stack<string> path;
     unordered_set<string> closed;
 
     Node start(START_STATE, 0, manhattan_distance(START_STATE));
@@ -103,7 +103,7 @@ int idA_star() {
         
         closed.clear();
         
-        int temp_dm = dfs(start, dm, times, open, closed);
+        int temp_dm = dfs(start, dm, times, path, closed);
         
         if (temp_dm == -1) {
             auto end_time = chrono::high_resolution_clock::now();
@@ -111,18 +111,14 @@ int idA_star() {
             
             cout << "运行时间: " << duration << " 毫秒" << endl;
             cout << "扩展节点总数: " << times << endl;
-            cout << "解路径长度: " << open.size() - 1 << endl;
+            cout << "解路径长度: " << path.size() - 1 << endl;
             cout << "最大深度: " << dm << endl;
             cout << "\n解路径:" << endl;
-            print_stack(open);
+            print_stack(path);
             return 0;
         }
         
-        if (temp_dm > dm) {
-            dm = temp_dm;
-        } else {
-            dm++;
-        }
+        dm = max(dm + 1, temp_dm);
     }
     
     cout << "在合理深度范围内未找到解" << endl;

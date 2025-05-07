@@ -7,7 +7,7 @@
 
 using namespace std;  
 
-bool dfs(int depth, int max_depth, int& times, stack<string>& open, unordered_set<string>& closed, const string &state, const string &end_state) {
+bool dfs(int depth, int max_depth, int& times, stack<string>& path, unordered_set<string>& closed, const string &state, const string &end_state) {
     if (depth > max_depth) return false;
     if (closed.count(state)) return false;
 
@@ -15,7 +15,7 @@ bool dfs(int depth, int max_depth, int& times, stack<string>& open, unordered_se
     ++times;
 
     if (state == end_state) {
-        open.push(state);
+        path.push(state);
         return true;
     }
 
@@ -28,12 +28,12 @@ bool dfs(int depth, int max_depth, int& times, stack<string>& open, unordered_se
         if (x_new < 0 || y_new < 0 || x_new > 2 || y_new > 2) continue;
         string tmp = state;
         swap(tmp[blank_index], tmp[x_new * 3 + y_new]);
-        if (dfs(depth + 1, max_depth, times, open, closed, tmp, end_state)) {
-            open.push(state);
+        if (dfs(depth + 1, max_depth, times, path, closed, tmp, end_state)) {
+            path.push(state);
             return true;
         } 
     }
-
+    closed.erase(state);
     return false;
 }
 
@@ -47,21 +47,22 @@ int iddfs_main()
     cout << "_______________________________" << endl;
     auto start_time = chrono::high_resolution_clock::now();
     int max_depth = 4;
-    stack<string> open; 
+    stack<string> path; 
     unordered_set<string> closed;
     int times = 0;
-    while (!dfs(0, max_depth, times, open, closed, START_STATE, END_STATE)) {
+    while (!dfs(0, max_depth, times, path, closed, START_STATE, END_STATE)) {
         ++max_depth;
-        closed.clear();  // 清空 
+        closed.clear();
+        while(!path.empty()) path.pop();
     }
     auto end_time = chrono::high_resolution_clock::now();
     auto duration = chrono::duration_cast<chrono::milliseconds>(end_time - start_time);
     cout << "运行时间: " << duration.count() << " 毫秒" << endl;
     cout << "扩展节点总数: " << times << endl;
-    cout << "解路径长度: " << open.size() - 1 << endl;
+    cout << "解路径长度: " << path.size() - 1 << endl;
     cout << "最大深度: " << max_depth << endl;
     cout << "\n解路径:" << endl;
-    print_stack(open);
+    print_stack(path);
 
     return 0;
 }
