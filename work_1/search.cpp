@@ -199,5 +199,6 @@ int main(int argc, char* argv[]) {
     std::cout << "Minimum distance: " << minDistance << std::endl;
     std::cout << "Time used: " << elapsed.count() << " ms" << std::endl;
     
+    system("pause");
     return 0;
 }
