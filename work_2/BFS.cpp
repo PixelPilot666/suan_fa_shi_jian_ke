@@ -10,9 +10,9 @@ using namespace std;
 
 int bfs() {
 
-    cout << "初始状态: " <<  endl;
+    cout << "Start status:" <<  endl;
     format_print(START_STATE);
-    cout << "目标状态: " << endl;
+    cout << "Target status:" << endl;
     format_print(END_STATE);
 
     cout << "_______________________________" << endl;
@@ -24,15 +24,21 @@ int bfs() {
     closed.insert(START_STATE);
 
     int times = 0;
+    auto start_time = chrono::high_resolution_clock::now();
 
     while(!open.empty()){
         vector<string> current = open.front();
         open.pop();
         string state = current.back();
         if (state == END_STATE) {
-            print(current);
-            cout << "Found solution in " << times << " moves." << endl;
+            auto end_time = chrono::high_resolution_clock::now();
+            auto duration = chrono::duration_cast<chrono::milliseconds>(end_time - start_time).count();
+            cout << "Time used: " << duration << " ms" << endl;
+            cout << "Total number of extended nodes: " << times << endl;
             cout << "Lenth of path is " << current.size() - 1 <<"."<< endl;
+            cout << "Path: " << endl;
+            print(current);
+
             break;
         }
         times++;

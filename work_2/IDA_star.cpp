@@ -4,7 +4,6 @@
 #include <unordered_set>
 #include <algorithm>
 #include <stack>
-#include <chrono>
 
 using namespace std;
 
@@ -84,9 +83,9 @@ int dfs(Node node, int dm, int& times, stack<string>& path, unordered_set<string
 int idA_star() {
     auto start_time = chrono::high_resolution_clock::now();
     
-    cout << "初始状态: " <<  endl;
+    cout << "Start status: " <<  endl;
     format_print(START_STATE);
-    cout << "目标状态: " << endl;
+    cout << "Target status" << endl;
     format_print(END_STATE);
     cout << "_______________________________" << endl;
     init_target_positions();
@@ -109,11 +108,12 @@ int idA_star() {
             auto end_time = chrono::high_resolution_clock::now();
             auto duration = chrono::duration_cast<chrono::milliseconds>(end_time - start_time).count();
             
-            cout << "运行时间: " << duration << " 毫秒" << endl;
-            cout << "扩展节点总数: " << times << endl;
-            cout << "解路径长度: " << path.size() - 1 << endl;
-            cout << "最大深度: " << dm << endl;
-            cout << "\n解路径:" << endl;
+            cout << "Time used: " << duration << " ms" << endl;
+            cout << "Total number of extended nodes: " << times << endl;
+            cout << "Length of path: " << path.size() - 1 << endl;
+            cout << "Maximum depth reached: " << dm << endl;
+            cout << "Path: " << endl;
+            
             print_stack(path);
             return 0;
         }

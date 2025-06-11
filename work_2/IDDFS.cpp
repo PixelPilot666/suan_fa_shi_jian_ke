@@ -3,7 +3,6 @@
 #include <stack>
 #include <iostream>
 #include <unordered_set>
-#include <chrono>
 
 using namespace std;  
 
@@ -39,9 +38,9 @@ bool dfs(int depth, int max_depth, int& times, stack<string>& path, unordered_se
 
 int iddfs_main()
 {
-    cout << "初始状态: " <<  endl;
+    cout << "Start status: " <<  endl;
     format_print(START_STATE);
-    cout << "目标状态: " << endl;
+    cout << "Target status: " << endl;
     format_print(END_STATE);
 
     cout << "_______________________________" << endl;
@@ -57,11 +56,13 @@ int iddfs_main()
     }
     auto end_time = chrono::high_resolution_clock::now();
     auto duration = chrono::duration_cast<chrono::milliseconds>(end_time - start_time);
-    cout << "运行时间: " << duration.count() << " 毫秒" << endl;
-    cout << "扩展节点总数: " << times << endl;
-    cout << "解路径长度: " << path.size() - 1 << endl;
-    cout << "最大深度: " << max_depth << endl;
-    cout << "\n解路径:" << endl;
+
+    cout << "Time used: " << duration.count() << " ms" << endl;
+    cout << "Total number of extended nodes: " << times << endl;
+    cout << "Lenth of path is " << path.size() - 1 << "." << endl;
+    cout << "Maximum depth reached: " << max_depth << endl;
+    cout << "Path: " << endl;
+
     print_stack(path);
 
     return 0;
