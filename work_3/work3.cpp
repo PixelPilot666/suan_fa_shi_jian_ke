@@ -174,6 +174,6 @@ int main() {
 
     // --- Run Strategy B ---
     strategy_b(m, k, static_tasks, dynamic_tasks);
-
+    system("pause");
     return 0;
 }

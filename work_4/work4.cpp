@@ -146,6 +146,6 @@ int main() {
     print_path(path_colors, " -> ");
     std::cout << "Path values sequence: ";
     print_path(path_values, " -> ");
-
+    system("pause"); // 等待用户按键
     return 0;
 }
